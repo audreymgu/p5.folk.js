@@ -48,10 +48,6 @@ function loadFolk(p5, fn, lifecycles) {
 
     return result;
   };
-
-  fn.loadCSV = function (filename) {
-    console.log("I will load the CSV file ${filename} soon!");
-  };
 }
 
 p5.registerAddon(loadFolk);
