@@ -1,6 +1,15 @@
 const defaultAddress = "http://folk-hex.lan:4273/ws";
 
 function loadFolk(p5, fn, lifecycles) {
+  function whenReady(sketch, callback) {
+    if (!sketch._folkReady) {
+      console.warn(
+        "You have not yet connected to a folk instance. Call connectFolk() first.",
+      );
+      return;
+    }
+    sketch._folkReady.then(() => callback(sketch.folk));
+  }
   fn.connectFolk = function (address = defaultAddress) {
     console.log("connectFolk(): attempting to connect to " + address);
     this.folk = new FolkWS(false, null, address);
@@ -12,15 +21,8 @@ function loadFolk(p5, fn, lifecycles) {
     const result = { id: null, values: null };
     const active = [];
 
-    if (!this._folkReady) {
-      console.warn(
-        "You have not yet connected to a folk instance. Call connectFolk() first.",
-      );
-      return result;
-    }
-
-    this._folkReady.then(() => {
-      this.folk.watch("/p/ " + pattern, {
+    whenReady(this, (folk) => {
+      folk.watch("/p/ " + pattern, {
         add: (match) => {
           active.push(match);
           result.id = active[0].p;
