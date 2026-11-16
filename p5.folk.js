@@ -39,6 +39,12 @@ function loadFolk(p5, fn, lifecycles) {
         },
       });
     });
+    fn.distanceFrom = function (p1, p2) {
+      whenReady(this, (folk) => {
+        console.log(p1);
+        console.log(p2);
+      });
+    };
 
     return result;
   };
