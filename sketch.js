@@ -14,5 +14,12 @@ function draw() {
   circle(125, mouseY, 60);
   fill(0);
   circle(135, mouseY - 8, 5);
+
+  if (this._folkReady) {
+    fill(0, 255, 0);
+    text("Folk is connected", 20, 30);
+  } else {
+    fill(255, 0, 0);
+    text("Folk not connected", 20, 30);
   }
 }
