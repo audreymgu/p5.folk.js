@@ -1,8 +1,9 @@
 # p5.folk.js
 
-<video width="100%" controls>
-  <source src="docs/readme_eagle-flying.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+
+https://github.com/user-attachments/assets/90014c9a-8d17-49fd-a85e-49690965725e
+
+
 
 This library allows you to integrate p5.js with folk. Currently proof-of-concept.
