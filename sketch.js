@@ -1,4 +1,3 @@
-let p5Bird = [];
 let sky, space, sunset;
 let currentSky;
 let value = 0;
@@ -51,6 +50,7 @@ function draw() {
     );
   }
 
+  // map back from pixels to delta
   if (altitude < 0) {
     delta = abs(max(altitude, -100)) / 20000;
   } else if (altitude > height) {
