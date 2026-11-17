@@ -1,12 +1,15 @@
-let bird = [];
+let p5Bird = [];
 let sky, space, sunset;
+let currentSky;
 let value = 0;
 let delta = 0;
 let altitude = 1;
 let distanceTracker;
+let cloudSVGs = [];
+let clouds = [];
 
 async function setup() {
-// folk initialization
+  // folk initialization
   connectFolk("http://folk-audrey.local:4273/ws");
   distanceTracker = watchFor("/bird/ is distance /distance/ from /earth/");
 
@@ -14,8 +17,18 @@ async function setup() {
   canvas = createCanvas(1000, 500);
   sky = color(170, 230, 250);
   space = color(10, 55, 80);
-  sunset = color(255, 225, 170);
+  sunset = color(255, 200, 150);
   currentSky = sky;
+
+  // load clouds
+  cloudSVGs.push(await loadImage("assets/cloud1.png"));
+  cloudSVGs.push(await loadImage("assets/cloud2.png"));
+  cloudSVGs.push(await loadImage("assets/cloud3.png"));
+
+  // create clouds
+  clouds.push(new Cloud(2, 700, 30, 14));
+  clouds.push(new Cloud(1, 450, 200, 8));
+  clouds.push(new Cloud(0, -200, 250, 10));
 }
 
 function draw() {
@@ -47,14 +60,19 @@ function draw() {
   }
 
   // draw bird
-  fill(255);
   noStroke();
-fill(255);
+  fill(255);
   arc(180, altitude, 80, 80, (PI * 7) / 8, PI + PI / 8);
   fill(200);
   circle(125, altitude, 80);
   fill(0);
   circle(135, altitude - 8, 10);
+
+  // display clouds
+  for (let cloud of clouds) {
+    cloud.update();
+    cloud.display();
+  }
 
   // display altitude
   fill(0);
@@ -67,5 +85,27 @@ fill(255);
   } else {
     fill(255, 0, 0);
     text("Folk not connected", 20, 30);
+  }
+}
+
+class Cloud {
+  constructor(cloud, startX, yPos, velocity) {
+    this.img = cloudSVGs[cloud];
+    this.x = startX;
+    this.y = yPos;
+    this.velocity = velocity;
+    this.w = this.img.width / 2;
+    this.h = this.img.height / 2;
+  }
+
+  update() {
+    this.x -= this.velocity;
+    if (this.velocity > 0 && this.x < -this.w) {
+      this.x = width;
+    }
+  }
+
+  display() {
+    image(this.img, this.x, this.y, this.w, this.h);
   }
 }
