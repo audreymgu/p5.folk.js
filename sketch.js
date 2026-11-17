@@ -47,8 +47,8 @@ function draw() {
   // display mouseY
   text(value, 30, 470);
 
-  // signal folk status
-  if (this._folkReady) {
+  // display folk connection
+  if (isFolkReady()) {
     fill(0, 255, 0);
     text("Folk is connected", 20, 30);
   } else {
