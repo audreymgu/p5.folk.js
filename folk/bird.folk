@@ -1,0 +1,5 @@
+Claim $this is a bird
+
+When /anchor/ is the ground {
+  Wish $this tracks its distance from $anchor
+}

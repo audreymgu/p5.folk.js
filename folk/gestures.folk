@@ -1,0 +1,23 @@
+When /someone/ wishes /p1/ tracks its distance from /p2/ {
+    When tag $p1 has pose /pose1/ at timestamp /t1/ &\
+         tag $p2 has pose /pose2/ at timestamp /t2/  {
+        
+        set t1 [dict get $pose1 t]
+        set t2 [dict get $pose2 t]
+        set t1x [lindex $t1 0]
+        set t1y [lindex $t1 1]
+        set t1z [lindex $t1 2]
+        set t2x [lindex $t2 0]
+        set t2y [lindex $t2 1]
+        set t2z [lindex $t2 2]
+        
+        set distance [expr {sqrt( ($t2x - $t1x) ** 2 + ($t2y - $t1y) ** 2 + ($t2z - $t1z) ** 2)}]
+        
+        Hold! -key distance_$p1-$p2 {
+          Claim $p1 is distance $distance from $p2
+          Wish $this is labelled "$p1 <> $p2: $distance"
+        }
+    }
+}
+
+Wish $this is labelled gestures.folk
